@@ -8,6 +8,8 @@ $LockedFile = "$DefaultSettingsDir\locked.json"
 $UserSettingsDir = "$env:USERPROFILE\.local\share\containers\podman-desktop\configuration"
 $UserSettingsFile = "$UserSettingsDir\settings.json"
 
+$Utf8NoBom = New-Object System.Text.UTF8Encoding $false
+
 # Clean up existing files
 Remove-Item $UserSettingsFile -Force -ErrorAction SilentlyContinue
 Remove-Item $LockedFile -Force -ErrorAction SilentlyContinue
@@ -18,23 +20,23 @@ New-Item -ItemType Directory -Force -Path $DefaultSettingsDir | Out-Null
 New-Item -ItemType Directory -Force -Path $UserSettingsDir | Out-Null
 
 # Write default-settings.json with proxy values
-@'
+[System.IO.File]::WriteAllText($DefaultSettingsFile, @'
 {
   "proxy.http": "http://example.com:8080",
   "proxy.https": "http://example.com:8080",
   "proxy.no": "localhost"
 }
-'@ | Set-Content $DefaultSettingsFile -Encoding UTF8
+'@, $Utf8NoBom)
 
 # Write locked.json to lock proxy settings
-@'
+[System.IO.File]::WriteAllText($LockedFile, @'
 {
   "locked": ["proxy.http", "proxy.https", "proxy.no"]
 }
-'@ | Set-Content $LockedFile -Encoding UTF8
+'@, $Utf8NoBom)
 
 Write-Host "Proxy managed label config applied."
 Write-Host "  default-settings.json : $DefaultSettingsFile"
 Write-Host "  locked.json           : $LockedFile"
 Write-Host ""
-Write-Host "Start Podman Desktop and check the Proxy page for 'managed-by' labels."
+Write-Host "Start Podman Desktop and check the Proxy page for managed-by labels."

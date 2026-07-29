@@ -16,6 +16,8 @@ $LockedFile = "$DefaultSettingsDir\locked.json"
 $UserSettingsDir = "$env:USERPROFILE\.local\share\containers\podman-desktop\configuration"
 $UserSettingsFile = "$UserSettingsDir\settings.json"
 
+$Utf8NoBom = New-Object System.Text.UTF8Encoding $false
+
 # Clean up existing files
 Remove-Item $UserSettingsFile -Force -ErrorAction SilentlyContinue
 Remove-Item $LockedFile -Force -ErrorAction SilentlyContinue
@@ -26,25 +28,25 @@ New-Item -ItemType Directory -Force -Path $DefaultSettingsDir | Out-Null
 New-Item -ItemType Directory -Force -Path $UserSettingsDir | Out-Null
 
 # Write user settings
-@'
+[System.IO.File]::WriteAllText($UserSettingsFile, @'
 {
   "preferences.appearance": "system",
   "feedback.dialog": false,
   "tasks.Toast": true
 }
-'@ | Set-Content $UserSettingsFile -Encoding UTF8
+'@, $Utf8NoBom)
 
 # Write managed default settings
-@'
+[System.IO.File]::WriteAllText($DefaultSettingsFile, @'
 {
   "feedback.dialog": true,
   "preferences.zoomLevel": 0.5,
   "preferences.ExitOnClose": false
 }
-'@ | Set-Content $DefaultSettingsFile -Encoding UTF8
+'@, $Utf8NoBom)
 
 # Write locked settings
-@'
+[System.IO.File]::WriteAllText($LockedFile, @'
 {
   "locked": [
     "terminal.integrated.lineHeight",
@@ -52,7 +54,7 @@ New-Item -ItemType Directory -Force -Path $UserSettingsDir | Out-Null
     "preferences.ExitOnClose"
   ]
 }
-'@ | Set-Content $LockedFile -Encoding UTF8
+'@, $Utf8NoBom)
 
 Write-Host "Combined managed configuration applied."
 Write-Host ""

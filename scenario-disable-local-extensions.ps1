@@ -8,6 +8,8 @@ $LockedFile = "$DefaultSettingsDir\locked.json"
 $UserSettingsDir = "$env:USERPROFILE\.local\share\containers\podman-desktop\configuration"
 $UserSettingsFile = "$UserSettingsDir\settings.json"
 
+$Utf8NoBom = New-Object System.Text.UTF8Encoding $false
+
 # Clean up existing files
 Remove-Item $UserSettingsFile -Force -ErrorAction SilentlyContinue
 Remove-Item $LockedFile -Force -ErrorAction SilentlyContinue
@@ -18,18 +20,18 @@ New-Item -ItemType Directory -Force -Path $DefaultSettingsDir | Out-Null
 New-Item -ItemType Directory -Force -Path $UserSettingsDir | Out-Null
 
 # Write default-settings.json
-@'
+[System.IO.File]::WriteAllText($DefaultSettingsFile, @'
 {
   "extensions.localExtensions.enabled": false
 }
-'@ | Set-Content $DefaultSettingsFile -Encoding UTF8
+'@, $Utf8NoBom)
 
-# Lock the setting
-@'
+# Write locked.json
+[System.IO.File]::WriteAllText($LockedFile, @'
 {
   "locked": ["extensions.localExtensions.enabled"]
 }
-'@ | Set-Content $LockedFile -Encoding UTF8
+'@, $Utf8NoBom)
 
 Write-Host "Local extensions disabled via managed config."
 Write-Host "  default-settings.json : $DefaultSettingsFile"
