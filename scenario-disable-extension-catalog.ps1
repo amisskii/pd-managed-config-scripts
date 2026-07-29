@@ -32,8 +32,8 @@ New-Item -ItemType Directory -Force -Path $UserSettingsDir | Out-Null
 '@ | Set-Content $LockedFile -Encoding UTF8
 
 Write-Host "Extension catalog disabled via managed config."
-Write-Host "  default-settings.json -> $DefaultSettingsFile"
-Write-Host "  locked.json           -> $LockedFile"
+Write-Host "  default-settings.json : $DefaultSettingsFile"
+Write-Host "  locked.json           : $LockedFile"
 Write-Host ""
-Write-Host "Start Podman Desktop — catalog should be hidden from Extensions,"
-Write-Host "Settings > Authentication, and Kubernetes pages."
+Write-Host "Start Podman Desktop - catalog should be hidden from Extensions,"
+Write-Host "Settings, Authentication, and Kubernetes pages."

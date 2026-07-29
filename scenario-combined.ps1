@@ -3,12 +3,12 @@
 # multiple properties with different override/lock combinations.
 #
 # Properties tested:
-#   preferences.appearance       — user only
-#   feedback.dialog              — user + default
-#   tasks.Toast                  — user + locked
-#   terminal.integrated.lineHeight — locked only
-#   preferences.zoomLevel        — default only
-#   preferences.ExitOnClose      — default + locked
+#   preferences.appearance       - user only
+#   feedback.dialog              - user + default
+#   tasks.Toast                  - user + locked
+#   terminal.integrated.lineHeight - locked only
+#   preferences.zoomLevel        - default only
+#   preferences.ExitOnClose      - default + locked
 
 $DefaultSettingsDir = "$env:PROGRAMDATA\Podman Desktop"
 $DefaultSettingsFile = "$DefaultSettingsDir\default-settings.json"
@@ -57,14 +57,14 @@ New-Item -ItemType Directory -Force -Path $UserSettingsDir | Out-Null
 Write-Host "Combined managed configuration applied."
 Write-Host ""
 Write-Host "Files written:"
-Write-Host "  settings.json         -> $UserSettingsFile"
-Write-Host "  default-settings.json -> $DefaultSettingsFile"
-Write-Host "  locked.json           -> $LockedFile"
+Write-Host "  settings.json         : $UserSettingsFile"
+Write-Host "  default-settings.json : $DefaultSettingsFile"
+Write-Host "  locked.json           : $LockedFile"
 Write-Host ""
 Write-Host "Properties to verify:"
-Write-Host "  preferences.appearance            — user only (system)"
-Write-Host "  feedback.dialog                   — user (false) overrides default (true)"
-Write-Host "  tasks.Toast                       — user (true) + locked"
-Write-Host "  terminal.integrated.lineHeight    — locked only (no value set)"
-Write-Host "  preferences.zoomLevel             — default only (0.5)"
-Write-Host "  preferences.ExitOnClose           — default (false) + locked"
+Write-Host "  preferences.appearance            - user only (system)"
+Write-Host "  feedback.dialog                   - user (false) overrides default (true)"
+Write-Host "  tasks.Toast                       - user (true) + locked"
+Write-Host "  terminal.integrated.lineHeight    - locked only (no value set)"
+Write-Host "  preferences.zoomLevel             - default only (0.5)"
+Write-Host "  preferences.ExitOnClose           - default (false) + locked"

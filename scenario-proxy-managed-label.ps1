@@ -34,7 +34,7 @@ New-Item -ItemType Directory -Force -Path $UserSettingsDir | Out-Null
 '@ | Set-Content $LockedFile -Encoding UTF8
 
 Write-Host "Proxy managed label config applied."
-Write-Host "  default-settings.json -> $DefaultSettingsFile"
-Write-Host "  locked.json           -> $LockedFile"
+Write-Host "  default-settings.json : $DefaultSettingsFile"
+Write-Host "  locked.json           : $LockedFile"
 Write-Host ""
 Write-Host "Start Podman Desktop and check the Proxy page for 'managed-by' labels."

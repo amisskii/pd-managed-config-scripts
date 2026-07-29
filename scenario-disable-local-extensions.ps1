@@ -32,7 +32,7 @@ New-Item -ItemType Directory -Force -Path $UserSettingsDir | Out-Null
 '@ | Set-Content $LockedFile -Encoding UTF8
 
 Write-Host "Local extensions disabled via managed config."
-Write-Host "  default-settings.json -> $DefaultSettingsFile"
-Write-Host "  locked.json           -> $LockedFile"
+Write-Host "  default-settings.json : $DefaultSettingsFile"
+Write-Host "  locked.json           : $LockedFile"
 Write-Host ""
-Write-Host "Start Podman Desktop — the 'Local Extensions' tab should be hidden."
+Write-Host "Start Podman Desktop - the 'Local Extensions' tab should be hidden."
