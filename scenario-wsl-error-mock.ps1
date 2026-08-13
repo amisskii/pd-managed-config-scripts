@@ -90,13 +90,14 @@ class PodmanMock {
         // Forward to real podman
         string dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         string realPodman = Path.Combine(dir, "podman-real.exe");
+        string arguments = string.Join(" ", args.Select(a => a.Contains(" ") ? "\"" + a + "\"" : a));
         var psi = new ProcessStartInfo {
             FileName = realPodman,
+            Arguments = arguments,
             UseShellExecute = false,
             RedirectStandardOutput = true,
             RedirectStandardError = true
         };
-        foreach (var arg in args) psi.ArgumentList.Add(arg);
         var proc = Process.Start(psi);
         Console.Write(proc.StandardOutput.ReadToEnd());
         Console.Error.Write(proc.StandardError.ReadToEnd());
