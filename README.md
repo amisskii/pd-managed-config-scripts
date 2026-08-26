@@ -12,6 +12,8 @@ Each script writes the necessary `settings.json`, `default-settings.json`, and/o
 | `scenario-disable-local-extensions` | [PR #16457](https://github.com/podman-desktop/podman-desktop/pull/16457) | Hides the "Local Extensions" tab |
 | `scenario-disable-extension-catalog` | [PR #16425](https://github.com/podman-desktop/podman-desktop/pull/16425) | Hides the extension catalog everywhere |
 | `scenario-combined` | [scenario-x-combined](https://github.com/odockal/podman-desktop-qe/blob/main/docs/scenarios/managed-configuration/scenario-x-combined.md) | Multiple properties with different user/default/locked combinations |
+| `scenario-disable-app-update` | [PR #17682](https://github.com/podman-desktop/podman-desktop/pull/17682) (closes [#16483](https://github.com/podman-desktop/podman-desktop/issues/16483)) | Sets `preferences.update.appUpdate: false` — no update checks or prompts on startup |
+| `scenario-restrict-provider-updates` | [PR #17878](https://github.com/podman-desktop/podman-desktop/pull/17878) (closes [#17877](https://github.com/podman-desktop/podman-desktop/issues/17877), [#16484](https://github.com/podman-desktop/podman-desktop/issues/16484)) | Sets `providers.allowUpdate: []` — hides the update button on all Resources page provider cards |
 | `cleanup` | — | Removes all config files between test runs |
 
 `scenario-wsl-error-mock.ps1` is Windows-only (it mocks a WSL service error) and has no macOS equivalent.
