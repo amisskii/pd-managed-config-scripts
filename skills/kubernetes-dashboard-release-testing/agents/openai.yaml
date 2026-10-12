@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kubernetes Dashboard Release Testing"
+  short_description: "Run the cross-platform Kubernetes Dashboard release matrix"
+  default_prompt: "Prepare the Kind cluster, execute the Kubernetes Dashboard scenario workflows for this platform, update only its tracker column, and clean up test fixtures."
