@@ -1,11 +1,38 @@
 # Scenario: Disable Local Extensions (PR #16457)
 # Sets extensions.localExtensions.enabled to false so the
 # "Local Extensions" tab is hidden in the Extensions section.
+#
+# Usage:
+#   .\scenario-disable-local-extensions.ps1 [community|redhat]
+#   $env:PD_BUILD = 'redhat'; .\scenario-disable-local-extensions.ps1
+# Defaults to "community" (Podman Desktop). Use "redhat" for the
+# Red Hat build of Podman Desktop.
 
-$DefaultSettingsDir = "$env:PROGRAMDATA\Podman Desktop"
+param(
+    [ValidateSet('community', 'redhat')]
+    [string]$Build = $(if ($env:PD_BUILD) { $env:PD_BUILD } else { 'community' })
+)
+
+switch ($Build) {
+    'community' {
+        $ManagedDirName    = 'Podman Desktop'
+        $UserConfigSubPath = 'containers\podman-desktop'
+        $AppDataName       = 'Podman Desktop'
+    }
+    'redhat' {
+        $ManagedDirName    = 'Red Hat\Podman Desktop'
+        $UserConfigSubPath = 'redhat\podman-desktop'
+        $AppDataName       = 'Red Hat build of Podman Desktop'
+    }
+    default {
+        throw "Unknown build '$Build'. Use 'community' or 'redhat'."
+    }
+}
+
+$DefaultSettingsDir = "$env:PROGRAMDATA\$ManagedDirName"
 $DefaultSettingsFile = "$DefaultSettingsDir\default-settings.json"
 $LockedFile = "$DefaultSettingsDir\locked.json"
-$UserSettingsDir = "$env:USERPROFILE\.local\share\containers\podman-desktop\configuration"
+$UserSettingsDir = "$env:USERPROFILE\.local\share\$UserConfigSubPath\configuration"
 $UserSettingsFile = "$UserSettingsDir\settings.json"
 
 $Utf8NoBom = New-Object System.Text.UTF8Encoding $false

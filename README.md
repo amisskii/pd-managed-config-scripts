@@ -20,23 +20,29 @@ Each script writes the necessary `settings.json`, `default-settings.json`, and/o
 
 ## Windows
 
+Each script takes an optional `community` (default) or `redhat` argument — or the `PD_BUILD=redhat` environment variable — to target either the community build (Podman Desktop) or the Red Hat build of Podman Desktop, which use different managed-config paths.
+
 ### File Locations
 
-| File | Path |
-|------|------|
-| User settings | `%USERPROFILE%\.local\share\containers\podman-desktop\configuration\settings.json` |
-| Managed defaults | `%PROGRAMDATA%\Podman Desktop\default-settings.json` |
-| Locked settings | `%PROGRAMDATA%\Podman Desktop\locked.json` |
+| File | Community build | Red Hat build |
+|------|------------------|----------------|
+| User settings | `%USERPROFILE%\.local\share\containers\podman-desktop\configuration\settings.json` | `%USERPROFILE%\.local\share\redhat\podman-desktop\configuration\settings.json` |
+| Managed defaults | `%PROGRAMDATA%\Podman Desktop\default-settings.json` | `%PROGRAMDATA%\Red Hat\Podman Desktop\default-settings.json` |
+| Locked settings | `%PROGRAMDATA%\Podman Desktop\locked.json` | `%PROGRAMDATA%\Red Hat\Podman Desktop\locked.json` |
+| Electron app data (removed by `cleanup.ps1`) | `%APPDATA%\Podman Desktop` | `%APPDATA%\Red Hat build of Podman Desktop` |
+
+The Red Hat build's Electron app data folder name mirrors the macOS one and has not been verified on Windows.
 
 ### Usage
 
 1. Close Podman Desktop
 2. Run a scenario script in PowerShell (may need admin for `%PROGRAMDATA%`):
    ```powershell
-   .\scenario-combined.ps1
+   .\scenario-combined.ps1            # community build (default)
+   .\scenario-combined.ps1 redhat     # Red Hat build
    ```
 3. Start Podman Desktop and verify the UI behavior
-4. Run `.\cleanup.ps1` before switching to another scenario
+4. Run `.\cleanup.ps1 [community|redhat]` before switching to another scenario
 
 ## macOS
 
